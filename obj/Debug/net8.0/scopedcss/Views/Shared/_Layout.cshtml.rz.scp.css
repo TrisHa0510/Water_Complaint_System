@@ -1,0 +1,50 @@
+body[b-bhzjiszcag] {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9fbfd;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Navbar */
+.navbar-brand[b-bhzjiszcag] {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #fff !important;
+}
+
+.nav-link[b-bhzjiszcag] {
+    color: #dff3fd !important;
+    transition: 0.3s ease;
+}
+
+.nav-link:hover[b-bhzjiszcag] {
+    color: #ffffff !important;
+    text-decoration: underline;
+}
+
+/* Footer */
+footer[b-bhzjiszcag] {
+    font-size: 0.8rem;
+    background-color: #f1f3f5;
+    color: #6c757d;
+    line-height: 1.3;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Keep footer at bottom */
+main[b-bhzjiszcag] {
+    flex: 1;
+}
+
+/* Responsive tweaks */
+@media (max-width: 576px) {
+    .navbar-brand[b-bhzjiszcag] {
+        font-size: 1rem;
+    }
+    footer[b-bhzjiszcag] {
+        font-size: 0.75rem;
+        padding: 4px 0;
+    }
+}

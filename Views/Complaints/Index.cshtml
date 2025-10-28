@@ -1,0 +1,104 @@
+@model IEnumerable<WaterComplaintSystem.Models.Complaint>
+@using WaterComplaintSystem.Extensions
+
+@{
+    ViewData["Title"] = "Complaints";
+}
+
+<h2>Water Supply Complaints</h2>
+
+<!-- Practical 13: TempData for success messages -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<!-- Practical 9: Query string filters -->
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">Filter Complaints</h5>
+        <form method="get" asp-action="Index">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Status</label>
+                    <select name="status" class="form-select">
+                        <option value="">All Status</option>
+                        <option value="Pending" selected="@(ViewBag.SelectedStatus == "Pending")">Pending</option>
+                        <option value="InProgress" selected="@(ViewBag.SelectedStatus == "InProgress")">In Progress</option>
+                        <option value="Resolved" selected="@(ViewBag.SelectedStatus == "Resolved")">Resolved</option>
+                        <option value="Rejected" selected="@(ViewBag.SelectedStatus == "Rejected")">Rejected</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label>Priority</label>
+                    <select name="priority" class="form-select">
+                        <option value="">All Priority</option>
+                        <option value="Low" selected="@(ViewBag.SelectedPriority == "Low")">Low</option>
+                        <option value="Medium" selected="@(ViewBag.SelectedPriority == "Medium")">Medium</option>
+                        <option value="High" selected="@(ViewBag.SelectedPriority == "High")">High</option>
+                        <option value="Critical" selected="@(ViewBag.SelectedPriority == "Critical")">Critical</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label>Ward</label>
+                    <select name="wardId" class="form-select">
+                        <option value="">All Wards</option>
+                        @foreach (var ward in ViewBag.Wards)
+                        {
+                            <option value="@ward.Id" selected="@(ViewBag.SelectedWardId == ward.Id)">@ward.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label>&nbsp;</label>
+                    <button type="submit" class="btn btn-primary d-block w-100">Apply Filters</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New Complaint</a>
+</p>
+
+<!-- Practical 15: Display all complaints -->
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Citizen</th>
+                <th>Ward</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Created Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Title</td>
+                    <td>@item.Citizen?.Name</td>
+                    <td>@item.Ward?.Name</td>
+                    <!-- Practical 7: Extension method usage -->
+                    <td><span class="@item.Status.GetStatusBadgeClass()">@item.Status</span></td>
+                    <td><span class="@item.Priority.GetPriorityBadgeClass()">@item.Priority</span></td>
+                    <td>@item.CreatedDate.ToString("MMM dd, yyyy")</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

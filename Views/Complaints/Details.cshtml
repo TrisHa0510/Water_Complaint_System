@@ -1,0 +1,61 @@
+@model WaterComplaintSystem.Models.Complaint
+@using WaterComplaintSystem.Extensions
+
+@{
+    ViewData["Title"] = "Complaint Details";
+}
+
+<h2>Complaint Details</h2>
+
+<div class="card mt-3">
+    <div class="card-header">
+        <h4>@Model.Title</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Complaint ID:</strong> @Model.Id</p>
+                <p><strong>Citizen:</strong> @Model.Citizen?.Name</p>
+                <p><strong>Ward:</strong> @Model.Ward?.Name (@Model.Ward?.Area)</p>
+                <p><strong>Status:</strong> <span class="@Model.Status.GetStatusBadgeClass()">@Model.Status</span></p>
+                <p><strong>Priority:</strong> <span class="@Model.Priority.GetPriorityBadgeClass()">@Model.Priority</span></p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Created Date:</strong> @Model.CreatedDate.ToString("MMMM dd, yyyy hh:mm tt")</p>
+                @if (Model.ResolvedDate.HasValue)
+                {
+                    <p><strong>Resolved Date:</strong> @Model.ResolvedDate.Value.ToString("MMMM dd, yyyy hh:mm tt")</p>
+                }
+                @if (Model.AssignedWorker != null)
+                {
+                    <p><strong>Assigned Worker:</strong> @Model.AssignedWorker.Name</p>
+                    <p><strong>Worker Phone:</strong> @Model.AssignedWorker.Phone</p>
+                }
+            </div>
+        </div>
+        
+        <hr />
+        
+        <h5>Description:</h5>
+        <p>@Model.Description</p>
+
+        @if (Model.Photos != null && Model.Photos.Any())
+        {
+            <hr />
+            <h5>Attached Photos:</h5>
+            <div class="row">
+                @foreach (var photo in Model.Photos)
+                {
+                    <div class="col-md-4 mb-3">
+                        <img src="@photo.FilePath" alt="Complaint Photo" class="img-fluid img-thumbnail" />
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

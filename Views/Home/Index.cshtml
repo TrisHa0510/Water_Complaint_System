@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center mt-5">
+    <!-- Practical 3: Time-based greeting with image -->
+    <div class="greeting-section mb-4">
+        <h1 class="display-4 greeting-text">@ViewData["Greeting"]</h1>
+        <p class="lead">@ViewBag.CurrentTime</p>
+        <div class="greeting-image mt-3">
+            <img src="@ViewData["ImageUrl"]" alt="Greeting" class="img-fluid rounded shadow" style="max-width: 400px;" />
+        </div>
+    </div>
+
+    <!-- Practical 13: TempData demonstration -->
+    @if (TempData["WelcomeMessage"] != null)
+    {
+        <div class="alert alert-info">
+            @TempData["WelcomeMessage"]
+        </div>
+    }
+
+    <div class="system-info mt-5">
+        <h2>@ViewBag.SystemName</h2>
+        <p class="text-muted">Report and track water supply complaints in your area</p>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">File Complaints</h5>
+                    <p class="card-text">Report water supply issues in your ward</p>
+                    <a href="@Url.Action("Create", "Complaints")" class="btn btn-primary">Report Issue</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Track Complaints</h5>
+                    <p class="card-text">View status of all complaints</p>
+                    <a href="@Url.Action("Index", "Complaints")" class="btn btn-primary">View Complaints</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Wards</h5>
+                    <p class="card-text">View and manage ward information</p>
+                    <a href="@Url.Action("Index", "Wards")" class="btn btn-primary">View Wards</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Practical 4: Navigation link -->
+    <div class="mt-5">
+        <a asp-action="Welcome" class="btn btn-outline-secondary">Go to Welcome Page</a>
+    </div>
+</div>

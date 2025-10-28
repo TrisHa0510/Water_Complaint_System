@@ -1,0 +1,88 @@
+@model WaterComplaintSystem.Models.Complaint
+
+@{
+    ViewData["Title"] = "Create Complaint";
+}
+
+<h2>File New Complaint</h2>
+
+<hr />
+
+<!-- Practical 14: Model validation demonstration -->
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="CitizenId" class="form-label">Citizen</label>
+                <select asp-for="CitizenId" class="form-select" asp-items="ViewBag.Citizens">
+                    <option value="">-- Select Citizen --</option>
+                </select>
+                <span asp-validation-for="CitizenId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="WardId" class="form-label">Ward</label>
+                <select asp-for="WardId" class="form-select" asp-items="ViewBag.Wards">
+                    <option value="">-- Select Ward --</option>
+                </select>
+                <span asp-validation-for="WardId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Priority" class="form-label"></label>
+                <select asp-for="Priority" class="form-select">
+                    <option value="Low">Low</option>
+                    <option value="Medium" selected>Medium</option>
+                    <option value="High">High</option>
+                    <option value="Critical">Critical</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Status" class="form-label"></label>
+                <select asp-for="Status" class="form-select">
+                    <option value="Pending" selected>Pending</option>
+                    <option value="InProgress">In Progress</option>
+                    <option value="Resolved">Resolved</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="AssignedWorkerId" class="form-label">Assign Worker (Optional)</label>
+                <select asp-for="AssignedWorkerId" class="form-select" asp-items="ViewBag.Workers">
+                    <option value="">-- Not Assigned --</option>
+                </select>
+            </div>
+
+            <!-- File upload demonstration -->
+            <div class="mb-3">
+                <label class="form-label">Upload Photo (Optional)</label>
+                <input type="file" name="photo" class="form-control" accept="image/*" />
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Create Complaint</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
